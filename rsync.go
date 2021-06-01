@@ -169,6 +169,8 @@ type RsyncOptions struct {
 	HumanReadable bool
 	// Progress show progress during transfer
 	Progress bool
+	// Read daemon-access password from FILE
+	PasswordFile string
 	// Info
 	Info string
 	// Exclude --exclude="", exclude remote paths.
@@ -523,7 +525,11 @@ func getArguments(options RsyncOptions) []string {
 	if options.Progress {
 		arguments = append(arguments, "--progress")
 	}
-
+	
+	if options.PasswordFile != "" {
+		arguments = append(arguments, "--password-file", options.PasswordFile)
+	}
+	
 	if options.IPv4 {
 		arguments = append(arguments, "--ipv4")
 	}
